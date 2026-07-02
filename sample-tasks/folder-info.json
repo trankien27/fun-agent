@@ -1,0 +1,7 @@
+{
+  "taskId": "00000000-0000-0000-0000-000000000002",
+  "taskType": "GET_FOLDER_INFO",
+  "payload": {
+    "folderKey": "BE_PHOTOBOOTH_DEPLOY"
+  }
+}

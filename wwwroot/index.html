@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FunStudio Agent Console</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <h1>FunStudio Agent Console</h1>
+            <p id="agentMeta">Loading...</p>
+        </div>
+        <div class="status">
+            <span id="statusDot" class="dot"></span>
+            <span id="statusText">Checking</span>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="sidebar">
+            <button class="nav active" data-panel="powershell">PowerShell</button>
+            <button class="nav" data-panel="service">Service</button>
+            <button class="nav" data-panel="folder">Folder</button>
+            <button class="nav" data-panel="deploy">Deploy</button>
+            <button class="nav" data-panel="iis">IIS</button>
+            <button class="nav" data-panel="print">Print Image</button>
+            <button class="nav" data-panel="received">Received</button>
+            <button class="nav" data-panel="raw">JSON</button>
+        </aside>
+
+        <section class="workspace">
+            <section class="panel active" id="panel-powershell">
+                <div class="panel-head">
+                    <h2>PowerShell</h2>
+                    <button class="run" id="runPowerShell">Run</button>
+                </div>
+                <div class="form-grid">
+                    <label>
+                        Mode
+                        <select id="psType">
+                            <option value="RUN_POWERSHELL_USER">User</option>
+                            <option value="RUN_POWERSHELL_ADMIN">Admin</option>
+                        </select>
+                    </label>
+                    <label>
+                        Timeout
+                        <input id="psTimeout" type="number" min="1" value="30">
+                    </label>
+                    <label class="wide">
+                        Script
+                        <textarea id="psScript" spellcheck="false">whoami; Get-Date</textarea>
+                    </label>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-service">
+                <div class="panel-head">
+                    <h2>Service</h2>
+                    <button class="run" id="runService">Run</button>
+                </div>
+                <div class="form-grid">
+                    <label>
+                        Task
+                        <select id="serviceTask">
+                            <option value="GET_SERVICE_STATUS">Get status</option>
+                            <option value="START_SERVICE">Start</option>
+                            <option value="STOP_SERVICE">Stop</option>
+                            <option value="RESTART_SERVICE">Restart</option>
+                        </select>
+                    </label>
+                    <label>
+                        Service
+                        <select id="serviceName"></select>
+                    </label>
+                    <label>
+                        Timeout
+                        <input id="serviceTimeout" type="number" min="1" value="60">
+                    </label>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-folder">
+                <div class="panel-head">
+                    <h2>Folder</h2>
+                    <button class="run" id="runFolder">Run</button>
+                </div>
+                <div class="form-grid">
+                    <label>
+                        Task
+                        <select id="folderTask">
+                            <option value="GET_FOLDER_INFO">Get info</option>
+                            <option value="LIST_FOLDER_FILES">List files</option>
+                            <option value="DOWNLOAD_TO_FOLDER">Download</option>
+                            <option value="EXTRACT_ZIP_TO_FOLDER">Extract zip</option>
+                            <option value="DELETE_FOLDER_FILE">Delete file</option>
+                            <option value="CLEAN_FOLDER">Clean folder</option>
+                        </select>
+                    </label>
+                    <label>
+                        Folder
+                        <select id="folderKey"></select>
+                    </label>
+                    <label>
+                        Relative path
+                        <input id="folderRelativePath" type="text" value="">
+                    </label>
+                    <label>
+                        File URL
+                        <input id="folderFileUrl" type="url" placeholder="https://example.com/file.zip">
+                    </label>
+                    <label>
+                        File name
+                        <input id="folderFileName" type="text" placeholder="file.zip">
+                    </label>
+                    <label>
+                        Timeout
+                        <input id="folderTimeout" type="number" min="1" value="300">
+                    </label>
+                    <label class="check">
+                        <input id="folderRecursive" type="checkbox">
+                        Recursive
+                    </label>
+                    <label class="check">
+                        <input id="folderOverwrite" type="checkbox" checked>
+                        Overwrite
+                    </label>
+                    <label class="check">
+                        <input id="folderCleanBeforeExtract" type="checkbox">
+                        Clean before extract
+                    </label>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-iis">
+                <div class="panel-head">
+                    <h2>IIS</h2>
+                    <button class="run danger" id="runIis">Run</button>
+                </div>
+                <div class="form-grid">
+                    <label>
+                        Task
+                        <select id="iisTask">
+                            <option value="START_IIS">Start</option>
+                            <option value="STOP_IIS">Stop</option>
+                            <option value="RESTART_IIS">Restart</option>
+                        </select>
+                    </label>
+                    <label>
+                        Timeout
+                        <input id="iisTimeout" type="number" min="1" value="120">
+                    </label>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-deploy">
+                <div class="panel-head">
+                    <h2>Deploy</h2>
+                    <button class="run danger" id="runDeploy">Run</button>
+                </div>
+                <div class="form-grid">
+                    <label>
+                        Task
+                        <select id="deployTask">
+                            <option value="UPDATE_VERSION">Update version BE/IIS</option>
+                            <option value="DEPLOY_FS_ASYNC_TRANSACTION">Deploy FSAsyncTransaction</option>
+                            <option value="DEPLOY_FS_UPDATE_SYNC">Deploy FSUpdateSync</option>
+                            <option value="DEPLOY_APP_FORM">Deploy AppForm</option>
+                        </select>
+                    </label>
+                    <label>
+                        Timeout
+                        <input id="deployTimeout" type="number" min="1" value="300">
+                    </label>
+                    <label class="check">
+                        <input id="deployCleanBeforeExtract" type="checkbox">
+                        Clean before extract
+                    </label>
+                    <label class="wide">
+                        Zip URL
+                        <input id="deployFileUrl" type="url" placeholder="https://example.com/package.zip">
+                    </label>
+                </div>
+            </section>
+
+            <section class="panel" id="panel-print">
+                <div class="panel-head">
+                    <h2>Print Image</h2>
+                    <div class="actions">
+                        <button id="refreshTransactions">Refresh</button>
+                        <button class="run" id="runPrintImage">Print</button>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <label class="wide">
+                        Transaction
+                        <select id="printTransaction"></select>
+                    </label>
+                    <label>
+                        Layout ID
+                        <input id="printLayoutId" type="number" min="0" value="0">
+                    </label>
+                    <label>
+                        Number of image
+                        <input id="printNumberOfImage" type="number" min="1" value="1">
+                    </label>
+                </div>
+                <div id="transactionPreview" class="transaction-table-wrap"></div>
+            </section>
+
+            <section class="panel" id="panel-raw">
+                <div class="panel-head">
+                    <h2>JSON</h2>
+                    <button class="run" id="runRaw">Run</button>
+                </div>
+                <textarea id="rawJson" class="json-editor" spellcheck="false"></textarea>
+            </section>
+
+            <section class="panel" id="panel-received">
+                <div class="panel-head">
+                    <h2>Received Tasks</h2>
+                    <button id="refreshReceived">Refresh</button>
+                </div>
+                <div id="receivedList" class="received-list"></div>
+            </section>
+
+            <section class="output">
+                <div class="panel-head">
+                    <h2>Result</h2>
+                    <button id="clearOutput">Clear</button>
+                </div>
+                <pre id="outputText">Ready.</pre>
+            </section>
+        </section>
+    </main>
+
+    <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "taskId": "00000000-0000-0000-0000-000000000004",
+  "taskType": "GET_SERVICE_STATUS",
+  "payload": {
+    "serviceName": "FSUpdateSync",
+    "timeoutSeconds": 60
+  }
+}

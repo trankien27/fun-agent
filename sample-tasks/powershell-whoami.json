@@ -1,0 +1,8 @@
+{
+  "taskId": "00000000-0000-0000-0000-000000000001",
+  "taskType": "RUN_POWERSHELL_USER",
+  "payload": {
+    "script": "whoami; Get-Date",
+    "timeoutSeconds": 30
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "taskId": "00000000-0000-0000-0000-000000000003",
+  "taskType": "LIST_FOLDER_FILES",
+  "payload": {
+    "folderKey": "BE_PHOTOBOOTH_DEPLOY",
+    "relativePath": "",
+    "recursive": false
+  }
+}
