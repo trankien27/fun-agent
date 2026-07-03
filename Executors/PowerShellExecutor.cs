@@ -31,7 +31,7 @@ public sealed class PowerShellExecutor
         }
 
         return RunAsync(
-            $"-NoProfile -ExecutionPolicy Bypass -Command {Quote(payload.Script)}",
+            BuildEncodedCommandArguments(payload.Script),
             payload.TimeoutSeconds,
             payload.WorkingDirectory,
             payload.EnvironmentVariables,
@@ -51,7 +51,7 @@ public sealed class PowerShellExecutor
         }
 
         return RunAsync(
-            $"-NoProfile -ExecutionPolicy Bypass -Command {Quote(payload.Script)}",
+            BuildEncodedCommandArguments(payload.Script),
             payload.TimeoutSeconds,
             payload.WorkingDirectory,
             payload.EnvironmentVariables,
@@ -107,7 +107,7 @@ public sealed class PowerShellExecutor
         }
 
         return RunAsync(
-            $"-NoProfile -ExecutionPolicy Bypass -Command {Quote(script)}",
+            BuildEncodedCommandArguments(script),
             timeoutSeconds,
             workingDirectory: null,
             environmentVariables: null,
@@ -230,6 +230,12 @@ public sealed class PowerShellExecutor
         return value.Length <= _options.MaxOutputLength
             ? value
             : value[.._options.MaxOutputLength] + Environment.NewLine + "[output truncated]";
+    }
+
+    private static string BuildEncodedCommandArguments(string script)
+    {
+        var bytes = Encoding.Unicode.GetBytes(script);
+        return $"-NoProfile -ExecutionPolicy Bypass -EncodedCommand {Convert.ToBase64String(bytes)}";
     }
 
     private static string Quote(string value)

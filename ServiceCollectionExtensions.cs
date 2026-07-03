@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
         services.Configure<PowerShellOptions>(configuration.GetSection(PowerShellOptions.SectionName));
         services.Configure<ManagedFolderOptions>(configuration.GetSection(ManagedFolderOptions.SectionName));
         services.Configure<TransactionOptions>(configuration.GetSection(TransactionOptions.SectionName));
+        services.Configure<TransactionErrorScannerOptions>(configuration.GetSection(TransactionErrorScannerOptions.SectionName));
         services.Configure<PrintImageOptions>(configuration.GetSection(PrintImageOptions.SectionName));
 
         services.AddHttpClient("agent-download");

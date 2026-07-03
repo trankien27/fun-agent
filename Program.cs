@@ -1,5 +1,6 @@
 using FunStudio.WindowsMaintenance.Agent;
 using FunStudio.WindowsMaintenance.Agent.Options;
+using FunStudio.WindowsMaintenance.Agent.Services;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using Microsoft.Extensions.Options;
 
@@ -36,6 +37,7 @@ if (WindowsServiceHelpers.IsWindowsService())
 
 builder.Services.AddMaintenanceAgent(builder.Configuration);
 builder.Services.AddHostedService<Worker>();
+builder.Services.AddHostedService<TransactionErrorScanner>();
 
 var localApiOptions = builder.Configuration
     .GetSection(LocalApiOptions.SectionName)
